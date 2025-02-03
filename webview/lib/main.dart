@@ -34,8 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white, // 배경색 설정
       body: Center(
-        child: Text('Louche9'),
-        // Image.asset('assets/splash_logo.png', width: 200), // 로고 이미지 추가
+        // child: Text('Louche9'),
+        child: Image.asset('assets/logo.png'), // 로고 이미지 추가
       ),
     );
   }
@@ -58,7 +58,7 @@ class _WebViewAppState extends State<WebViewApp> {
     // 웹뷰 컨트롤러 초기화
     final WebViewController controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://louche9.com'));
+      ..loadRequest(Uri.parse('https://dev.louche9.com'));
 
     _controller = controller;
   }
