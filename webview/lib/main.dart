@@ -4,9 +4,41 @@ import 'package:webview_flutter/webview_flutter.dart';
 void main() {
   runApp(
     const MaterialApp(
-      home: WebViewApp(),
+      home: SplashScreen(),
     ),
   );
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const WebViewApp()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white, // 배경색 설정
+      body: Center(
+        child: Text('Louche9'),
+        // Image.asset('assets/splash_logo.png', width: 200), // 로고 이미지 추가
+      ),
+    );
+  }
 }
 
 class WebViewApp extends StatefulWidget {
