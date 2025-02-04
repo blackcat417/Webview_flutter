@@ -34,8 +34,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white, // 배경색 설정
       body: Center(
-        // child: Text('Louche9'),
-        child: Image.asset('assets/logo.png'), // 로고 이미지 추가
+        child: Image.asset(
+          'assets/logo.png',
+          width: 300,
+        ), // 로고 이미지 추가
       ),
     );
   }
@@ -55,26 +57,32 @@ class _WebViewAppState extends State<WebViewApp> {
   void initState() {
     super.initState();
 
-    // 웹뷰 컨트롤러 초기화
-    final WebViewController controller = WebViewController()
+    _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(Uri.parse('https://dev.louche9.com'));
+  }
 
-    _controller = controller;
+  // 🔹 전 화면으로 이동하는 함수 (뒤로 가기 기능)
+  Future<bool> _goBack(BuildContext context) async {
+    if (await _controller.canGoBack()) {
+      _controller.goBack();
+      return false; // 앱 종료 안 함
+    }
+    return true; // 앱 종료
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: const Text('Flutter WebView'),
-      // ),
-      body: SafeArea(
-        // SafeArea 추가
-        top: true,
-        bottom: false,
-        child: WebViewWidget(controller: _controller),
+    return WillPopScope(
+      // 🔹 뒤로 가기 감지
+      onWillPop: () => _goBack(context),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          top: true,
+          bottom: false,
+          child: WebViewWidget(controller: _controller),
+        ),
       ),
     );
   }
